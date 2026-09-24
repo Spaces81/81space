@@ -20,7 +20,7 @@ export default function QuestionDetail() {
     // 1. Lấy chi tiết câu hỏi
     const { data: qData } = await supabase
       .from('questions')
-      .select(`*, profiles(name, avatar_url)`)
+      .select(`*, profiles(full_name, avatar_url)`)
       .eq('id', id)
       .single();
     
@@ -31,7 +31,7 @@ export default function QuestionDetail() {
     // 2. Lấy danh sách câu trả lời
     const { data: aData } = await supabase
       .from('answers')
-      .select(`*, profiles(name, avatar_url)`)
+      .select(`*, profiles(full_name, avatar_url)`)
       .eq('question_id', id)
       .order('created_at', { ascending: true });
     
@@ -94,9 +94,9 @@ export default function QuestionDetail() {
         <div className="mt-8 flex items-center text-sm text-gray-500 space-x-4 border-t border-gray-100 pt-4">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-700 flex items-center justify-center font-bold">
-              {question.profiles?.name?.charAt(0) || 'U'}
+              {question.profiles?.full_name?.charAt(0) || 'U'}
             </div>
-            <span className="font-medium text-gray-900">{question.profiles?.name || 'Người dùng'}</span>
+            <span className="font-medium text-gray-900">{question.profiles?.full_name || 'Người dùng'}</span>
           </div>
           <span>đã hỏi vào {new Date(question.created_at).toLocaleString('vi-VN')}</span>
           <span>• {question.views} lượt xem</span>
@@ -121,7 +121,7 @@ export default function QuestionDetail() {
               <div className="text-gray-800 whitespace-pre-wrap">{ans.content}</div>
               <div className="mt-4 text-sm text-gray-500 flex justify-between items-center">
                 <div className="flex items-center space-x-2">
-                  <span className="font-medium text-primary-700">{ans.profiles?.name}</span>
+                  <span className="font-medium text-primary-700">{ans.profiles?.full_name}</span>
                 </div>
                 <span>{new Date(ans.created_at).toLocaleString('vi-VN')}</span>
               </div>

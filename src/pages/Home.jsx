@@ -13,7 +13,7 @@ export default function Home() {
         .from('questions')
         .select(`
           *,
-          profiles (name, avatar_url)
+          profiles (full_name, avatar_url)
         `)
         .order('created_at', { ascending: false });
       
@@ -67,9 +67,9 @@ export default function Home() {
               <div className="flex items-center text-sm text-gray-500 mt-4 space-x-6">
                 <div className="flex items-center space-x-2">
                   <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-600">
-                    {q.profiles?.name?.charAt(0) || 'U'}
+                    {q.profiles?.full_name?.charAt(0) || 'U'}
                   </div>
-                  <span>{q.profiles?.name || 'Người dùng'}</span>
+                  <span>{q.profiles?.full_name || 'Người dùng'}</span>
                 </div>
                 <span>👀 {q.views} lượt xem</span>
                 <span>🕒 {new Date(q.created_at).toLocaleDateString('vi-VN')}</span>
